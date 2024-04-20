@@ -1,24 +1,25 @@
-import React, { useEffect, useState }from 'react'
+import React, { useEffect } from "react";
+import "./App.css";
+import { BrowserRouter as Router } from "react-router-dom";
+import Routes from "./Routes";
 
 function App() {
-
-  const [backendData, setBackendData] = useState([{}])
-
+  
   useEffect(() => {
-    fetch("http://localhost:8000/message").then(
-      response => response.json()
-    ).then(
-      data => {
-        setBackendData(data)
-      }
-    )
-  }, [])
+    const refreshPage = () => {
+      window.location.reload();
+    };
+    const interval = setInterval(refreshPage, 2 * 60 * 1000); 
+    return () => clearInterval(interval);
+  }, []);
 
   return (
-    <div>
-        <h1>Hello</h1>
+    <div className="App">
+      <Router>
+        <Routes />
+      </Router>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;

@@ -36,3 +36,17 @@
     transform: rotate(360deg);
   }
 }
+
+.chart-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center; 
+  padding: 30px;
+  font-size: large;
+}
+
+.candlestick-container {
+  width: 90%; 
+  margin: 0 auto;
+  padding: 30px; 
+}
