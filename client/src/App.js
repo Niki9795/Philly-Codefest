@@ -1,23 +1,21 @@
-import React, { useEffect } from "react";
+import React from "react";
 import "./App.css";
-import { BrowserRouter as Router } from "react-router-dom";
-import Routes from "./Routes";
+import { BrowserRouter, Routes, Route} from "react-router-dom";
+import Nav from "./components/Nav";
+import HomePage from "./AppPages/HomePage"
+import SignUp from "./AppPages/SignUpPage";
 
 function App() {
-  
-  useEffect(() => {
-    const refreshPage = () => {
-      window.location.reload();
-    };
-    const interval = setInterval(refreshPage, 2 * 60 * 1000); 
-    return () => clearInterval(interval);
-  }, []);
 
   return (
     <div className="App">
-      <Router>
-        <Routes />
-      </Router>
+      <BrowserRouter >
+      <Nav />
+      <Routes>
+        <Route path="/" element={<HomePage />}/>
+        <Route path="/signup" element={<SignUp />} />
+      </Routes>
+      </BrowserRouter>
     </div>
   );
 }
