@@ -1,10 +1,9 @@
 import os, logging, sys
 
 # Settings for global variables
-# data_address = "./data/"
-DATA_ADDRESS = "./data/"
-TRAIN_DIR = os.path.join(DATA_ADDRESS, "preprocessed", "train")
-TEST_DIR = os.path.join(DATA_ADDRESS, "preprocessed", "test")
+DATA_ADDRESS = "../data/"
+dir_fsc22 = "../data/fsc22"
+dir_esc50 = "../data/esc50"
 
 # Some useful functions
 import pickle, re

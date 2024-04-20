@@ -1,7 +1,8 @@
 from sklearn.base import BaseEstimator, TransformerMixin
 import numpy as np
 import librosa
-import noisereduce as nr
+
+# import noisereduce as nr
 
 
 def reduce_noise(signal, sr):

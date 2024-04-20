@@ -25,65 +25,6 @@ def read_signal(path, sr=None):
     return signal, sr
 
 
-class audio_loader:
-
-    def process_file_segmentation(self, signal, sr, segment_length=5, denoise=True):
-        # Apply denoise before cutting the segments
-        if denoise:
-            signal = preprocessing_pipeline.reduce_noise(signal, sr)
-        duration = len(signal) / sr
-        ls_file = []
-
-        if duration > segment_length:
-            num_segments = int(duration // segment_length)
-            for i in range(num_segments):
-                start_time = i * segment_length
-                end_time = (i + 1) * segment_length
-                segment = signal[int(start_time * sr) : int(end_time * sr)]
-                ls_file.append(segment)
-            # Handle the last segment if there is a remainder
-            if duration % segment_length > 0:
-                start_time = num_segments * segment_length
-                end_time = duration
-                segment = signal[int(start_time * sr) : int(end_time * sr)]
-                ls_file.append(segment)
-        else:
-            # If the file is shorter than or equal to the segment_length, put it in the list
-            ls_file.append(signal)
-        return ls_file
-
-    def process_raw(
-        self, segment_length=5, denoise=True, n_fft=2048, n_mels=128, n_mfcc=20
-    ):
-        ls_new_signal = []
-        # Cut audio into segments with given length
-        for audio in self.ls_raw_signal:
-            ls_new_signal += self.process_file_segmentation(
-                signal=audio, sr=self.sr, segment_length=segment_length, denoise=denoise
-            )
-        ls_mfcc = []
-        for new_signal in ls_new_signal:
-            _, _, mfcc = preprocessing_pipeline.process_audio(
-                new_signal,
-                self.sr,
-                length=segment_length,
-                n_fft=n_fft,
-                n_mels=n_mels,
-                n_mfcc=n_mfcc,
-                denoise=False,
-            )
-            # print(mfcc.shape)
-            ls_mfcc.append(mfcc)
-        self.preprocessed = np.array(ls_mfcc)
-        print("Preprocess finished: ", self.preprocessed.shape)
-
-    def __init__(self, ls_raw_signal: list, sr):
-        # list of raw audio data
-        self.ls_raw_signal = ls_raw_signal
-        self.sr = sr
-        self.preprocessed = None
-
-
 class auth_model:
     def train(
         self, train_audio_loader, n_epochs, patience, model_save_path, learning_rate
