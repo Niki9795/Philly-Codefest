@@ -5,6 +5,7 @@ import Nav from "./components/Nav";
 import HomePage from "./AppPages/HomePage"
 import SignUp from "./AppPages/SignUpPage";
 import PrivateComponent from "./components/privateComponent";
+import Settings from './AppPages/Settings'; // Import your Settings component
 
 function App() {
 
@@ -17,6 +18,7 @@ function App() {
         <Route path="/" element={<HomePage />}/>
         </Route>
         <Route path="/signup" element={<SignUp />} />
+        <Route path="/settings" element={<Settings />} />
       </Routes>
       </BrowserRouter>
     </div>
