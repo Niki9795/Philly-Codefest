@@ -1,29 +1,18 @@
+// HomePage.js
 import React from "react";
-import { Navbar, Nav, Container } from "react-bootstrap";
+import Navbar from "./components/NavBar"; // Import the Navbar component
 
-const ChartWithNavbar = () => {
+const HomePage = () => {
   return (
     <div className="App">
-      <Navbar bg="dark" data-bs-theme="dark">
-        <Container>
-          <Navbar.Brand href="/">Metratrics</Navbar.Brand>
-          <Nav className="me-auto">
-            <Nav.Link href="home">Home</Nav.Link>
-            <Nav.Link href="markets">Markets</Nav.Link>
-            <Nav.Link href="#">News</Nav.Link>
-            <Nav.Link href="#">Portfolio</Nav.Link>
-            <Nav.Link href="#">About Us</Nav.Link>
-          </Nav>
-        </Container>
-      </Navbar>
-
+      <Navbar /> {/* Use the Navbar component */}
       <div className="d-flex justify-content-between align-items-center chart-container">
         <div>
-    
+          {/* Your chart or content goes here */}
         </div>
       </div>
     </div>
   );
 };
 
-export default ChartWithNavbar;
+export default HomePage;
