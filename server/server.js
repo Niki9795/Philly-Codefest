@@ -75,10 +75,9 @@ app.get("/markers", async (req, res) => {
 });
 
 // Define the endpoint URL
-const endpointUrl = 'https://r30htuioc6.execute-api.us-east-1.amazonaws.com/dev';
-
+//const endpointUrl = 'https://r30htuioc6.execute-api.us-east-1.amazonaws.com/dev';
 // Define the function to upload the audio file
-async function uploadAudio(audioFile) {
+/*sync function uploadAudio(audioFile) {
     try {
         // Make a POST request to the endpoint with the audio file
         const response = await axios.post(endpointUrl, audioFile, {
@@ -98,10 +97,10 @@ async function uploadAudio(audioFile) {
         // Handle the error
         throw error;
     }
-}
+}*/
 
 // Define the route to handle the audio file upload
-app.post('/uploadwav', upload.single('audio'), async (req, res) => {
+/*app.post('/uploadwav', upload.single('audio'), async (req, res) => {
     try {
         // Read the uploaded audio file
         console.log("AUDIO API CALLED");
@@ -118,6 +117,30 @@ app.post('/uploadwav', upload.single('audio'), async (req, res) => {
         // Handle the error
         res.status(500).send('Internal Server Error');
     }
+});*/
+// Define the route to handle the audio file upload
+const uploadDirectory = 'uploads/';
+app.post('/uploadwav', upload.single('audio'), async (req, res) => {
+  try {
+      // Read the uploaded audio file
+      console.log("AUDIO API CALLED");
+      const audioFile = fs.readFileSync(req.file.path);
+      
+      // Generate a unique filename for the audio file
+      const uniqueFilename = `${Date.now()}_${req.file.originalname}`;
+      
+      // Save the audio file locally
+      const filePath = `${uploadDirectory}${uniqueFilename}`;
+      fs.writeFileSync(filePath, audioFile);
+      
+      // Send a success response
+      res.send({ message: 'Audio file uploaded successfully', filePath });
+
+  } catch (error) {
+      console.error(error);
+      // Handle the error
+      res.status(500).send('Internal Server Error');
+  }
 });
 
 
