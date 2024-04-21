@@ -29,7 +29,7 @@ const Nav = () => {
             {auth ? (
               <>
                 <li className="nav-item">
-                  <Link className="nav-link" onClick={logout} to="/login">LogOut</Link>
+                  <Link className="nav-link" onClick={logout} to="/login">LogOut ({JSON.parse(auth).name})</Link>
                 </li>
               </>
             ) : (
