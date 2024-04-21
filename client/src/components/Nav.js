@@ -24,6 +24,9 @@ const Nav = () => {
             <li className="nav-item">
               <Link className="nav-link" to="/product">Our Product</Link>
             </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/dashboard">Dashboard</Link>
+            </li>
           </ul>
           <ul className="navbar-nav">
             {auth ? (
