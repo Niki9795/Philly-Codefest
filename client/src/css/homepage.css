@@ -1,44 +1,120 @@
 /* HomePage.css */
 .homepage {
-    color: #f4c194; /* Flat-green color theme */
-}
-
-.jumbotron {
-    background: url('../static/homepage_jumbotron.gif') no-repeat center center; 
-    background-size: cover; /* Ensure the GIF covers the jumbotron */
-    margin-bottom: 0; /* Remove default margin from Bootstrap */
-}
-
-.bg-custom {
-    background-color: #eef0e7; /* Light gray background */
-    color: #333; /* Darker text for better readability */
-}
-
-.content-section {
-    margin-top: 2rem;
-}
-
-.content-section h2 {
-    font-size: 2.5rem; /* Larger font for headings */
-    color: inherit; /* Ensures heading uses current text color */
-}
-
-.content-section p {
-    font-size: 1.2rem; /* Optimal text size for readability */
-    text-align: center; /* Center align text */
-    color: inherit; /* Ensures text uses current text color */
-}
-
-.content-section img {
-    margin-top: 20px; /* Spacing between text and image */
-}
-
-@media (max-width: 768px) {
+    color: #f4c194;
+    overflow-x: hidden;
+  }
+  
+  .jumbotron {
+    position: relative;
+    height: 80vh;
+    margin-bottom: 0;
+    overflow: hidden;
+  }
+  
+  .jumbotron::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('../static/homepage_jumbotron.gif') no-repeat center center;
+    background-size: cover;
+    filter: brightness(0.6);
+    z-index: -2;
+  }
+  
+  .jumbotron::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.15);
+    z-index: -1;
+  }
+  
+  .jumbotron-content {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: #fff;
+  }
+  
+  .jumbotron h1 {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    font-weight: bold;
+    letter-spacing: 2px;
+  }
+  
+  .jumbotron p {
+    font-size: 1.5rem;
+    font-weight: 300;
+  }
+  
+  .content-section {
+    padding: 3rem 0;
+    height: 100%;
+    display: flex;
+    align-items: center;
+  }
+  
+  .content-container {
+    width: 70%;
+    margin: 0 auto;
+  }
+  
+  .light-section {
+    background-color: #f0e8d8;
+    height: 60vh;
+  }
+  
+  .light-section h2 {
+    color: #333;
+    font-size: 2.5rem;
+    font-weight: bold;
+    text-align: right;
+  }
+  
+  .light-section p {
+    color: #555;
+    font-size: 1.2rem;
+    line-height: 1.6;
+    text-align: right;
+  }
+  
+  .dark-section {
+    background-color: #0b0b15;
+    height: 60vh;
+  }
+  
+  .dark-section h2 {
+    color: #f4c194;
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 1.5rem;
+  }
+  
+  .dark-section p {
+    color: #f4c194;
+    font-size: 1.2rem;
+    line-height: 1.6;
+  }
+  
+  @media (max-width: 768px) {
     .jumbotron h1 {
-        font-size: 2.5rem; /* Smaller font size for smaller devices */
+      font-size: 2.5rem;
     }
-
+  
     .jumbotron p {
-        font-size: 1rem; /* Smaller lead text */
+      font-size: 1rem;
     }
-}
+  
+    .content-container {
+      width: 90%;
+    }
+  }
