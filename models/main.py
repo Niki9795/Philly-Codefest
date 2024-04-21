@@ -4,6 +4,10 @@ import librosa
 import json
 
 
+model_dir = "./"  # Replace with the path to your model directory
+model = inference.model_fn(model_dir)
+
+
 def convert_to_human(output_data):
     sound_dict = {
         0: "Fire",
@@ -49,8 +53,7 @@ def main():
     output = inference.output_fn(prediction, "application/json")
 
     result = convert_to_human(output_data=output)
-    import json
 
-    with open("output.json", "w") as f:
-        json.dump(r, f)
+    with open("../output/output.json", "w") as f:
+        json.dump(result, f)
     return result
