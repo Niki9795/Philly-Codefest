@@ -59,3 +59,12 @@
   }
 }
 
+.form-group{
+  padding: 7px;
+  display: block;
+  width: 700px;
+  margin: 20px;
+  line-height: 300%;
+  margin-left: 20%;
+}
+

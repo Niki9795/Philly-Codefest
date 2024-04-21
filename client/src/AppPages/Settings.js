@@ -2,44 +2,63 @@ import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap
 
 const Settings = () => {
-    const [name, setName] = useState("");
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [sms, setSms] = useState("");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [sms, setSms] = useState("");
+  const [receiveSMS, setReceiveSMS] = useState(false);
+  const [receiveEmail, setReceiveEmail] = useState(false);
 
-    const collectData = async () => {
-        console.log('sadas')
-        console.warn(name, email, password, sms);
-        let result = await fetch("http://localhost:8000/settings", {
-          method: "post",
-          body: JSON.stringify({name, email, password, sms}),
-          headers: {
-            'Content-type':'application/json'
-          }
-        });
-        result = await result.json();
-        console.warn(result);
+  const handleSave = async () => {
+    try {
+      const response = await fetch('http://localhost:27017/philly-codefest.philly-codefest', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name,
+          email,
+          sms,
+          receiveSMS,
+          receiveEmail,
+        }),
+      });
+      const data = await response.json();
+      console.log(data);
+    } catch (error) {
+      console.error('Error:', error);
     }
+  };
 
-    return(
-      <div className="container">
-      <form onSubmit={collectData} className="mt-5">
-        <div className="form-group">
-        <label>Name: {name}</label>
+    return (
+      <div className="form-group">
+        <div className="row">
+          <div className="col">
+            <h4 style={{marginBottom:'10px'}}>Receive notifications via:</h4>
+            <div className="form-check">
+              <input type="checkbox" className="form-check-input" id="smsCheckbox" checked={receiveSMS}
+                onChange={() => setReceiveSMS(!receiveSMS)} style={{ marginTop: '16px' }} />
+              <label className="form-check-label" htmlFor="smsCheckbox">SMS</label>
+            </div>
+            <div className="form-check">
+              <input type="checkbox" className="form-check-input" id="emailCheckbox" checked={receiveEmail}
+                onChange={() => setReceiveEmail(!receiveEmail)} style={{ marginTop: '16px' }} />
+              <label className="form-check-label" htmlFor="emailCheckbox">Email</label>
+            </div>
+          </div>
+          <div className="col">
+            <label>Change name: </label>
+            <input type="name" value={name} onChange={e => setName(e.target.value)}  className="form-control" />
+
+            <label>Change email:</label>
+            <input type="email" value={email} onChange={e => setEmail(e.target.value)} className="form-control" />
+
+            <label>Change phone number:</label>
+            <input type="text" value={sms} onChange={e => setSms(e.target.value)} className="form-control" />
+            
+          </div>
         </div>
-
-        <div className="form-group">
-        <label>Email:</label>
-        <input type="email" value={email} onChange={e => setEmail(e.target.value)} className="form-control" />
-        </div>
-
-        <div className="form-group">
-        <label>SMS:</label>
-        <input type="text" value={sms} onChange={e => setSms(e.target.value)} className="form-control" />
-        </div>
-
-        <button type="submit" className="btn btn-primary">Submit</button>
-      </form>
+        <button type="submit" className="btn btn-primary" onClick={handleSave}>Submit</button>
       </div>
     );
 }
