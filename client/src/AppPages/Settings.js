@@ -30,6 +30,7 @@ const Settings = () => {
     }
   };
 
+    // The 'receive alerts for' section is not hooked up for possible functionality, currently uses email checkbox func for placeholder
     return (
       <div className="form-group">
         <div className="row">
@@ -44,6 +45,41 @@ const Settings = () => {
               <input type="checkbox" className="form-check-input" id="emailCheckbox" checked={receiveEmail}
                 onChange={() => setReceiveEmail(!receiveEmail)} style={{ marginTop: '16px' }} />
               <label className="form-check-label" htmlFor="emailCheckbox">Email</label>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col">
+              <h4 style={{ marginBottom: '10px' }}>Receive alerts for:</h4> 
+              <div className="form-check">
+                <input type="checkbox" className="form-check-input" id="smsCheckbox" checked={receiveSMS}
+                  onChange={() => setReceiveSMS(!receiveSMS)} style={{ marginTop: '16px' }} />
+                <label className="form-check-label" htmlFor="smsCheckbox">Any human activity</label>
+              </div>
+              <div className="form-check">
+                <input type="checkbox" className="form-check-input" id="emailCheckbox" checked={receiveEmail}
+                  onChange={() => setReceiveEmail(!receiveEmail)} style={{ marginTop: '16px' }} />
+                <label className="form-check-label" htmlFor="emailCheckbox">Logging</label>
+              </div>
+              <div className="form-check">
+                <input type="checkbox" className="form-check-input" id="emailCheckbox" checked={receiveEmail}
+                  onChange={() => setReceiveEmail(!receiveEmail)} style={{ marginTop: '16px' }} />
+                <label className="form-check-label" htmlFor="emailCheckbox">Gunshots</label>
+              </div>
+              <div className="form-check">
+                <input type="checkbox" className="form-check-input" id="emailCheckbox" checked={receiveEmail}
+                  onChange={() => setReceiveEmail(!receiveEmail)} style={{ marginTop: '16px' }} />
+                <label className="form-check-label" htmlFor="emailCheckbox">Motor vehicles</label>
+              </div>
+              <div className="form-check">
+                <input type="checkbox" className="form-check-input" id="emailCheckbox" checked={receiveEmail}
+                  onChange={() => setReceiveEmail(!receiveEmail)} style={{ marginTop: '16px' }} />
+                <label className="form-check-label" htmlFor="emailCheckbox">Animal cries</label>
+              </div>
+              <div className="form-check">
+                <input type="checkbox" className="form-check-input" id="emailCheckbox" checked={receiveEmail}
+                  onChange={() => setReceiveEmail(!receiveEmail)} style={{ marginTop: '16px' }} />
+                <label className="form-check-label" htmlFor="emailCheckbox">Fires</label>
+              </div>
             </div>
           </div>
           <div className="col">
