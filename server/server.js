@@ -45,13 +45,14 @@ app.get("/location", async (req, res) => {
   }
 
   // Split the location string into longitude and latitude
-  const [longitude, latitude] = user.location.split(',');
+  const location = user.location.map(([locationName, longitude, latitude]) => ({
+    locationName,
+    longitude,
+    latitude
+  }));
 
-  // Send the longitude and latitude as a response
-  res.send({
-    longitude: parseFloat(longitude),
-    latitude: parseFloat(latitude)
-  });
+  // Send the markers array as a response
+  res.send(location);
 });
 
 app.get("/markers", async (req, res) => {
