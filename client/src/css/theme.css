@@ -1,0 +1,25 @@
+/* dashboard.css */
+
+/* Dark theme */
+body {
+    background-color: #222;
+    color: #fff;
+}
+
+/* Flat theme */
+.flat-green {
+    color: #f4c194;
+}
+
+/* Card backgrounds */
+.card-bg1 {
+    background-color: #2d3a30; /* Slightly darker than the background */
+}
+
+.card-bg2 {
+    background-color: #2d3a30; /* Slightly lighter than the background */
+}
+
+.card-bg3 {
+    background-color: #2d3a30; /* Slightly different shade */
+}
