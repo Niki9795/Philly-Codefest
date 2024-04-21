@@ -44,7 +44,7 @@ app.get("/location", async (req, res) => {
     return;
   }
 
-  const [longitude, latitude] = user.location;
+  const { longitude, latitude } = user.location;
     res.send({ longitude, latitude });
 });
 
