@@ -143,5 +143,44 @@ app.post('/uploadwav', upload.single('audio'), async (req, res) => {
   }
 });
 
+const outputDirectory = '../output/';
+
+app.get('/detect', (req, res) => {
+  const outputFilePath = `${outputDirectory}output.json`;
+
+  // Check if the output.json file exists
+  fs.access(outputFilePath, fs.constants.F_OK, (err) => {
+    if (err) {
+      // If the file doesn't exist, send a response indicating no data
+      res.send({ data: null });
+    } else {
+      // If the file exists, read its content
+      fs.readFile(outputFilePath, 'utf8', (err, data) => {
+        if (err) {
+          console.error('Error reading output.json:', err);
+          res.status(500).send('Internal Server Error');
+        } else {
+          try {
+            // Parse the JSON data
+            const jsonData = JSON.parse(data);
+
+            // Delete the output.json file
+            fs.unlink(outputFilePath, (err) => {
+              if (err) {
+                console.error('Error deleting output.json:', err);
+              }
+            });
+
+            // Send the JSON data as a response
+            res.send({ data: jsonData });
+          } catch (error) {
+            console.error('Error parsing JSON:', error);
+            res.status(500).send('Internal Server Error');
+          }
+        }
+      });
+    }
+  });
+});
 
 app.listen(8000, () => {console.log("Server started on port 8000")})
