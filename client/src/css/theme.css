@@ -2,24 +2,166 @@
 
 /* Dark theme */
 body {
-    background-color: #222;
+    background-color: #252525 !important;
     color: #fff;
 }
 
 /* Flat theme */
-.flat-green {
-    color: #f4c194;
-}
+
 
 /* Card backgrounds */
 .card-bg1 {
-    background-color: #2d3a30; /* Slightly darker than the background */
+    background-color: #345150; /* Slightly darker than the background */
+    color: #b4b2b2 !important;
 }
 
 .card-bg2 {
-    background-color: #2d3a30; /* Slightly lighter than the background */
+    background-color: #345150; /* Slightly lighter than the background */
+    color: #b4b2b2 !important;
 }
 
 .card-bg3 {
+    background-color: #264233; /* Slightly different shade */
+    color: #b4b2b2 !important;
+}
+
+/* Scrollable section class for larger screens */
+.scrollable-section {
+    overflow-y: auto;
+    height: 100vh;
+}
+
+@media (max-width: 991px) {
+    /* Adjust for smaller screens */
+    .scrollable-section {
+        height: auto; /* Allow the height to grow as needed on small screens */
+    }
+}
+
+/* Ensure the map container is not affected by the scrollable section */
+.col-md-6.p-0 {
+    height: 100vh; /* Set the same fixed height as the scrollable section */
+    overflow: hidden; /* Prevents scrolling */
+}
+
+/* Alert boxes */
+.alert-box {
     background-color: #2d3a30; /* Slightly different shade */
+    color: #f4c194; /* Flat theme color */
+    margin-bottom: 0rem; /* Space between divs */
+}
+
+.alert-name {
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.alert-number {
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.alert-date {
+    font-size: 0.8rem;
+}
+
+.alert-random {
+    font-size: 0.8rem;
+}
+
+
+/* Make text larger on smaller screens if needed */
+@media (max-width: 768px) {
+    .large-font {
+        font-size: 1.5rem; /* Increase the font size on smaller screens */
+    }
+}
+
+/* dashboard.css */
+/* General styling */
+body, h2, .card-title, .card-text {
+    font-family: 'Open Sans', Arial, sans-serif;
+}
+
+/* Colors */
+:root {
+    --flat-dark: #2d3a30;
+    --flat-green: #f4c194;
+    --flat-background: #222;
+    --flat-text-color: #fff;
+}
+
+/* Dark theme for body */
+body {
+    background-color: var(--flat-background);
+    color: var(--flat-text-color);
+}
+
+/* Typography */
+h2 {
+    font-size: 1.5rem;
+}
+
+/* Cards */
+.card-bg1, .card-bg2, .card-bg3 {
+    background-color: var(--flat-dark);
+    border: none; /* Removes any border to maintain flatness */
+}
+
+/* Map container */
+.sticky-map {
+    position: sticky;
+    top: 0;
+    z-index: 10; /* Ensures it stacks on top when scrolling */
+}
+
+/* Scrollable section for right-side content */
+.scrollable-section {
+    overflow-y: auto;
+    height: calc(100vh - 4rem); /* Assuming the navbar is 4rem */
+}
+
+/* Media queries for responsiveness */
+@media (max-width: 991px) {
+    .scrollable-section {
+        height: auto;
+    }
+}
+
+@media (max-width: 768px) {
+    h2 {
+        font-size: 1.25rem;
+    }
+}
+
+/* Sticky map positioning for large screens */
+@media (min-width: 992px) {
+    .sticky-map {
+        position: -webkit-sticky;
+        position: sticky;
+        top: 0;
+        height: 100vh;
+    }
+}
+
+/* for alert box */
+.btn-flat {
+    background-color: var(--flat-dark);
+    color: var(--flat-text-color);
+    border: none;
+}
+
+.btn-flat:hover, .btn-flat:focus {
+    background-color: var(--flat-green);
+    color: var(--flat-background);
+}
+
+/* Modal styling for flat design */
+.modal-content {
+    background-color: var(--flat-dark);
+    color: var(--flat-text-color);
+}
+
+.modal-header, .modal-footer {
+    border-color: var(--flat-background);
 }
