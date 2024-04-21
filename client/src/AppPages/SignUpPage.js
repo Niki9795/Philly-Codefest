@@ -2,24 +2,26 @@ import React,  {useEffect, useState} from "react";
 import {useNavigate} from 'react-router-dom';
 
 const SignUp = () => {
-
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [phone, setPhone] = useState("");
+    const [location, setLocation] = useState(null);
     const navigate = useNavigate();
+
     useEffect(() => {
       const auth = localStorage.getItem('user');
       if (auth) {
         navigate('/')
       }
+      fetchLocation(); // Fetch location when component mounts
     }, [])
 
     const collectData = async () => {
         console.warn(name, email, password);
         let result = await fetch("http://localhost:8000/register", {
           method: "post",
-          body: JSON.stringify({name, email, password, phone}),
+          body: JSON.stringify({name, email, password, phone, location}),
           headers: {
             'Content-type':'application/json'
           }
@@ -28,6 +30,15 @@ const SignUp = () => {
         console.warn(result);
         localStorage.setItem("user", JSON.stringify(result))
         navigate('/')
+    }
+
+    const fetchLocation = () => {
+      navigator.geolocation.getCurrentPosition(position => {
+        setLocation({
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude
+        });
+      });
     }
 
   return(
