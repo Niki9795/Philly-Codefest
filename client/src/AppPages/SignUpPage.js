@@ -14,7 +14,6 @@ const SignUp = () => {
       if (auth) {
         navigate('/')
       }
-      fetchLocation(); // Fetch location when component mounts
     }, [])
 
     const collectData = async () => {
@@ -30,15 +29,6 @@ const SignUp = () => {
         console.warn(result);
         localStorage.setItem("user", JSON.stringify(result))
         navigate('/')
-    }
-
-    const fetchLocation = () => {
-      navigator.geolocation.getCurrentPosition(position => {
-        setLocation({
-          latitude: position.coords.latitude,
-          longitude: position.coords.longitude
-        });
-      });
     }
 
   return(

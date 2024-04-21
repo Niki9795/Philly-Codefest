@@ -7,9 +7,8 @@ import EventAlertModal from "../components/EventAlert";
 
 const Dashboard = () => {
     const [showModal, setShowModal] = useState(false); //remove
-    const [location, setLocation] = useState({longitude: 0, latitude: 0});
-    const [markers, setMarkers] = useState([]);
     const [outputData, setOutputData] = useState(null);
+    const [alerts, setAlerts] = useState();
     
     const handleAlertClick  = (data) => { //remove for alert
         setShowModal(true);
@@ -17,20 +16,6 @@ const Dashboard = () => {
     };
 
     const handleCloseModal = () => setShowModal(false);
-
-    useEffect(() => {
-        fetch('http://localhost:8000/location')
-            .then(response => response.json())
-            .then(data => setLocation(data))
-            .catch(err => console.error(err));
-    }, []);
-
-    useEffect(() => {
-        fetch('http://localhost:8000/markers') // Replace with your server's URL
-          .then(response => response.json())
-          .then(data => setMarkers(data))
-          .catch(error => console.error(error));
-      }, []);
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -50,6 +35,16 @@ const Dashboard = () => {
         };
     }, []);
 
+    useEffect(() => {
+        fetch('http://localhost:8000/alerts') // Replace with your server's URL
+          .then(response => response.json())
+          .then(data => {
+            setAlerts(data);
+            console.log('Alerts:', data);
+          })
+          .catch(error => console.error(error));
+      }, []);
+
     return (
         <div>
             <div className="row m-0">
@@ -57,22 +52,32 @@ const Dashboard = () => {
                     <Map
                         mapboxAccessToken="pk.eyJ1IjoibWFsaWt1amp3YWwiLCJhIjoiY2x2OGxwZG5xMDZibjJqbnprdDNhb2s4NiJ9.ANScLYZmZCyhYm-PMHHcog"
                         initialViewState={{
-                            longitude: location.longitude,
-                            latitude: location.latitude,
+                            longitude: -62.46641126710576,
+                            latitude: -3.5146957460989574,
                             zoom: 10
                         }}
                         style={{ width: "100%", height: "100%" }}
                         mapStyle="mapbox://styles/mapbox/outdoors-v12"
                     >
-                        {markers.map((marker, index) => (
                         <Marker
-                            key={index}
-                            longitude={marker.longitude}
-                            latitude={marker.latitude}
+                            longitude= {-62.4666}
+                            latitude={-3.514698}
                             anchor="bottom"
                             color="red"
                         />
-                        ))}
+                        <Marker
+                            longitude= {-62.7}
+                            latitude={-3.67}
+                            anchor="bottom"
+                            color="red"
+                        />
+                        <Marker
+                            longitude= {-62.5}
+                            latitude={-3.6}
+                            anchor="bottom"
+                            color="red"
+                        />
+                        
                         {/* <Marker longitude={-62.46641126710576} latitude={-3.5146957460989574} anchor="bottom" color="red" /> */}
                     </Map>
                 </div>
@@ -82,48 +87,35 @@ const Dashboard = () => {
                         <Card className="card-bg1" text="white" style={{ width: "18rem", margin: "0 10px" }}>
                             <Card.Body>
                                 <Card.Title className="text-center">Alerts</Card.Title>
-                                <div className="display-1 text-center">0</div>
+                                <div className="display-1 text-center">3</div>
                                 <Card.Text className="text-center">received so far</Card.Text>
                             </Card.Body>
                         </Card>
                         <Card className="card-bg2" text="white" style={{ width: "18rem", margin: "0 10px" }}>
                             <Card.Body>
                                 <Card.Title className="text-center">Actions</Card.Title>
-                                <div className="display-1 text-center">0</div>
+                                <div className="display-1 text-center">4</div>
                                 <Card.Text className="text-center">Taken</Card.Text>
                             </Card.Body>
                         </Card>
                         <Card className="card-bg3" text="white" style={{ width: "18rem", margin: "0 10px" }}>
                             <Card.Body>
                                 <Card.Title className="text-center">Intruders</Card.Title>
-                                <div className="display-1 text-center">0</div>
+                                <div className="display-1 text-center">2</div>
                                 <Card.Text className="text-center">Detected</Card.Text>
                             </Card.Body>
                         </Card>
                     </div>
                     <div className="w-100 mt-4">
                         {/* Previous alerts info divs go here */}
+                        {alerts && (
                         <AlertInfo 
-                            name="Location 1 - Drexel University" 
-                            number="#001" 
-                            dateTime={new Date().toLocaleDateString('en-US', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' })}
-                            randomNum={Math.floor(Math.random() * 1000)}
-                            onClick={handleAlertClick} // Pass the click handler
+                            name={alerts.location[0]} 
+                            number={`Forest`} 
+                            dateTime={new Date(alerts.date).toLocaleDateString('en-US', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' })}
+                            cause={"forest"}
                         />
-                        <AlertInfo 
-                            name="Alert Name 1" 
-                            number="#001" 
-                            dateTime={new Date().toLocaleDateString('en-US', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' })}
-                            randomNum={Math.floor(Math.random() * 1000)}
-                            onClick={handleAlertClick} // Pass the click handler
-                        />
-                        <AlertInfo 
-                            name="Alert Name 1" 
-                            number="#001" 
-                            dateTime={new Date().toLocaleDateString('en-US', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' })}
-                            randomNum={Math.floor(Math.random() * 1000)}
-                            onClick={handleAlertClick} // Pass the click handler
-                        />
+                        )}
                         {/* Add more divs as needed */}
                     </div>
                 </div>

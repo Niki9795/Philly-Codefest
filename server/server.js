@@ -68,6 +68,8 @@ app.get("/markers", async (req, res) => {
   res.send(markers);
 });
 
+
+
 // Define the endpoint URL
 //const endpointUrl = 'https://r30htuioc6.execute-api.us-east-1.amazonaws.com/dev';
 // Define the function to upload the audio file
@@ -153,17 +155,17 @@ app.post('/uploadwav', upload.single('audio'), async (req, res) => {
 
 const outputDirectory = '../output/';
 
-app.get('/detect', (req, res) => {
+app.get('/detect', async (req, res) => {
   const outputFilePath = `${outputDirectory}output.json`;
 
   // Check if the output.json file exists
-  fs.access(outputFilePath, fs.constants.F_OK, (err) => {
+  fs.access(outputFilePath, fs.constants.F_OK, async (err) => {
     if (err) {
       // If the file doesn't exist, send a response indicating no data
       res.send({ data: null });
     } else {
       // If the file exists, read its content
-      fs.readFile(outputFilePath, 'utf8', (err, data) => {
+      fs.readFile(outputFilePath, 'utf8', async (err, data) => {
         if (err) {
           console.error('Error reading output.json:', err);
           res.status(500).send('Internal Server Error');
@@ -171,6 +173,17 @@ app.get('/detect', (req, res) => {
           try {
             // Parse the JSON data
             const jsonData = JSON.parse(data);
+
+            // Fetch the user from the database
+            const user = await User.findOne({}); // Add a condition here if needed
+
+            if (user) {
+              // Increment the count field
+              user.count += 1;
+              user.cause = jsonData.class;
+              // Save the user back to the database
+              await user.save();
+            }
 
             // Delete the output.json file
             fs.unlink(outputFilePath, (err) => {
@@ -190,5 +203,61 @@ app.get('/detect', (req, res) => {
     }
   });
 });
+
+app.get("/alerts", async (req, res) => {
+  // Fetch user data from the database
+  const user = await User.findOne({}, 'location markers cause date count');
+
+  if (!user) {
+    res.status(404).send({ error: "No user found" });
+    return;
+  }
+
+  // Send the specific user data as a response
+  res.send({
+    location: user.location,
+    cause: user.cause,
+    date: user.date,
+    count: user.count
+  });
+});
+
+// app.get('/detect', (req, res) => {
+//   const outputFilePath = `${outputDirectory}output.json`;
+
+//   // Check if the output.json file exists
+//   fs.access(outputFilePath, fs.constants.F_OK, (err) => {
+//     if (err) {
+//       // If the file doesn't exist, send a response indicating no data
+//       res.send({ data: null });
+//     } else {
+//       // If the file exists, read its content
+//       fs.readFile(outputFilePath, 'utf8', (err, data) => {
+//         if (err) {
+//           console.error('Error reading output.json:', err);
+//           res.status(500).send('Internal Server Error');
+//         } else {
+//           try {
+//             // Parse the JSON data
+//             const jsonData = JSON.parse(data);
+
+//             // Delete the output.json file
+//             fs.unlink(outputFilePath, (err) => {
+//               if (err) {
+//                 console.error('Error deleting output.json:', err);
+//               }
+//             });
+
+//             // Send the JSON data as a response
+//             res.send({ data: jsonData });
+//           } catch (error) {
+//             console.error('Error parsing JSON:', error);
+//             res.status(500).send('Internal Server Error');
+//           }
+//         }
+//       });
+//     }
+//   });
+// });
 
 app.listen(8000, () => {console.log("Server started on port 8000")})
