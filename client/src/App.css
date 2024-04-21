@@ -45,6 +45,11 @@
   cursor: pointer;
 }
 
+.login {
+  margin-left: 30%;
+  margin-top: 100px;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
@@ -52,5 +57,14 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.form-group{
+  padding: 7px;
+  display: block;
+  width: 700px;
+  margin: 20px;
+  line-height: 300%;
+  margin-left: 20%;
 }
 
