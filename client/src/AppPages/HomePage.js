@@ -14,8 +14,9 @@ const HomePage = () => {
         <div className="content-container">
           <div className="row content-section">
             <div className="col-12 col-md-6">
-              <h2>About Our Technology</h2>
-              <p>Discover how our AI detects threats and intrusions to preserve natural habitats.</p>
+              <h2>How our system helps preserve rainforests?</h2>
+              <p>Prevent Illegal Deforestation by sending realtime alerts to detect chainsaws, trucks and sign of incursion</p>
+              
             </div>
             <div className="col-12 col-md-6">
               <img src="/acoustic.png" alt="Acoustic AI" className="img-fluid" />
@@ -31,7 +32,7 @@ const HomePage = () => {
             </div>
             <div className="col-12 col-md-6">
               <h2>Real-time Monitoring</h2>
-              <p>Continuous surveillance ensures that any disturbance is caught early.</p>
+              <p>We can help stop poaching by providing our partners with real-time data and patterns of activity that allow for targeted protections</p>
             </div>
           </div>
         </div>
