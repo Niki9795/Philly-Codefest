@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
 import axios from 'axios';
+import "../css/recorder.css";
 
 const AudioRecorder = () => {
     const [recording, setRecording] = useState(false);
@@ -64,13 +65,21 @@ const AudioRecorder = () => {
     };
 
     return (
-        <div>
-            <button onClick={startRecording} disabled={recording}>Start Recording</button>
-            <button onClick={stopRecording} disabled={!recording}>Stop Recording</button>
-            <button onClick={uploadAudio} disabled={!audioData}>Upload Recorded Audio</button>
-            <input type="file" ref={fileInputRef} style={{ display: 'none' }} onChange={handleFileUpload} accept="audio/*" />
-            <button onClick={() => fileInputRef.current.click()}>Upload Audio File</button>
-            <audio src={audioURL} controls />
+        <div className="audio-recorder">
+            <div className="button-container">
+                <button className={`record-button ${recording ? 'recording' : ''}`} onClick={startRecording} disabled={recording}>
+                    {recording ? 'Recording...' : 'Start Recording'}
+                </button>
+                <button className="stop-button" onClick={stopRecording} disabled={!recording}>Stop Recording</button>
+            </div>
+            <div className="upload-container">
+                <button className="upload-button" onClick={uploadAudio} disabled={!audioData}>Upload Recorded Audio</button>
+                <input type="file" ref={fileInputRef} style={{ display: 'none' }} onChange={handleFileUpload} accept="audio/*" />
+                <button className="upload-button" onClick={() => fileInputRef.current.click()}>Upload Audio File</button>
+            </div>
+            <div className="audio-player">
+                <audio src={audioURL} controls />
+            </div>
         </div>
     );
 };
