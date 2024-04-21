@@ -27,7 +27,7 @@ const EventAlertModal = ({ show, handleClose, data }) => {
                 <p>This is an important alert for Belém do Candeia.</p>
                 {data && (
                     <div>
-                        <p>Class: {data.class}</p>
+                        <p>Cause: {data.class}</p>
                         <p>Confidence: {data.confidence}</p>
                     </div>
                 )}

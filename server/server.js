@@ -119,27 +119,41 @@ app.get("/markers", async (req, res) => {
     }
 });*/
 // Define the route to handle the audio file upload
-const uploadDirectory = 'uploads/';
+const path = require('path');
+const uploadDirectory = '../input/';
 app.post('/uploadwav', upload.single('audio'), async (req, res) => {
   try {
-      // Read the uploaded audio file
-      console.log("AUDIO API CALLED");
-      const audioFile = fs.readFileSync(req.file.path);
-      
-      // Generate a unique filename for the audio file
-      const uniqueFilename = `${Date.now()}_${req.file.originalname}`;
-      
-      // Save the audio file locally
-      const filePath = `${uploadDirectory}${uniqueFilename}`;
-      fs.writeFileSync(filePath, audioFile);
-      
-      // Send a success response
-      res.send({ message: 'Audio file uploaded successfully', filePath });
+    // Read the uploaded audio file
+    console.log("AUDIO API CALLED");
+    const audioFile = fs.readFileSync(req.file.path);
+
+    // Set the unique filename to "input"
+    const uniqueFilename = "input.wav";
+
+    // Create the upload directory if it doesn't exist
+    if (!fs.existsSync(uploadDirectory)) {
+      fs.mkdirSync(uploadDirectory, { recursive: true });
+    }
+
+    // Generate the file path
+    const filePath = path.join(uploadDirectory, uniqueFilename);
+
+    // Check if the file already exists
+    if (fs.existsSync(filePath)) {
+      // If it exists, delete the existing file
+      fs.unlinkSync(filePath);
+    }
+
+    // Save the audio file
+    fs.writeFileSync(filePath, audioFile);
+
+    // Send a success response
+    res.send({ message: 'Audio file uploaded successfully', filePath });
 
   } catch (error) {
-      console.error(error);
-      // Handle the error
-      res.status(500).send('Internal Server Error');
+    console.error(error);
+    // Handle the error
+    res.status(500).send('Internal Server Error');
   }
 });
 
