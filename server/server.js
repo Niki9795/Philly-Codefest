@@ -68,7 +68,7 @@ async function uploadAudio(audioFile) {
 app.post('/uploadwav', upload.single('audio'), async (req, res) => {
     try {
         // Read the uploaded audio file
-
+        console.log("AUDIO API CALLED");
         const audioFile = fs.readFileSync(req.file.path);
         
         // Upload the audio file to the SageMaker endpoint
