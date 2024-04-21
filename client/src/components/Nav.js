@@ -10,14 +10,21 @@ const Nav = () => {
   }
 
   return (
-    <div className="nav-ul">
-      <ul>
+    <div>
+      {
+        auth ?
+      
+      <ul className="nav-ul">
         <li><Link to="/">Home</Link></li>
         <li><Link to="/product">Our Product</Link></li>
-        <li><Link to="/login">Log in</Link></li>
-        <li>{auth ? <Link onClick={logout} to="/login">LogOut</Link> : <Link to="/signup">Sign Up</Link>}</li>
+        <li> <Link onClick={logout} to="/login">Logout</Link></li>
       </ul>
-
+        :
+        <ul className="nav-ul">
+          <li><Link to="/signup">Sign Up</Link></li>
+          <li><Link to="/login">Log in</Link></li>
+        </ul>
+      }
       <div>
         <div>
     
