@@ -10,7 +10,10 @@ const userSchema = new mongoose.Schema({
         type: Date,
         default: Date.now
     },
-    location: { type: String, default: null },
+    location: {
+        latitude: Number,
+        longitude: Number
+      },
     markers: { type: Array, default: [] },
     count: { type: Array, default: [] },
     landType: { type: String, default: null },
