@@ -1,14 +1,11 @@
 import React, { useState } from "react";
-import Navbar from "./components/NavBar";
 import "mapbox-gl/dist/mapbox-gl.css";
 import Map, { Marker } from 'react-map-gl';
 import Card from 'react-bootstrap/Card';
-import '../css/theme.css'; // Import the CSS file
 
 const Dashboard = () => {
     return (
         <div>
-            <Navbar />
             <div className="row m-0">
                 <div className="col-md-6 p-0">
                     <Map
@@ -29,23 +26,23 @@ const Dashboard = () => {
                     <div className="w-100 d-flex justify-content-center">
                         <Card className="card-bg1" text="white" style={{ width: "18rem", margin: "0 10px" }}>
                             <Card.Body>
-                                <Card.Title>Alerts</Card.Title>
+                                <Card.Title className="text-center">Alerts</Card.Title>
                                 <div className="display-1 text-center">0</div>
-                                <Card.Text>received so far</Card.Text>
+                                <Card.Text className="text-center">received so far</Card.Text>
                             </Card.Body>
                         </Card>
                         <Card className="card-bg2" text="white" style={{ width: "18rem", margin: "0 10px" }}>
                             <Card.Body>
-                                <Card.Title>Actions</Card.Title>
+                                <Card.Title className="text-center">Actions</Card.Title>
                                 <div className="display-1 text-center">0</div>
-                                <Card.Text>Taken</Card.Text>
+                                <Card.Text className="text-center">Taken</Card.Text>
                             </Card.Body>
                         </Card>
                         <Card className="card-bg3" text="white" style={{ width: "18rem", margin: "0 10px" }}>
                             <Card.Body>
-                                <Card.Title>Intruders</Card.Title>
+                                <Card.Title className="text-center">Intruders</Card.Title>
                                 <div className="display-1 text-center">0</div>
-                                <Card.Text>Text below card 3</Card.Text>
+                                <Card.Text className="text-center">Detected</Card.Text>
                             </Card.Body>
                         </Card>
                     </div>
