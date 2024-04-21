@@ -22,9 +22,6 @@ const Nav = () => {
               <Link className="nav-link" to="/">Home</Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="/product">Our Product</Link>
-            </li>
-            <li className="nav-item">
               <Link className="nav-link" to="/dashboard">Dashboard</Link>
             </li>
           </ul>
@@ -33,6 +30,9 @@ const Nav = () => {
               <>
                 <li className="nav-item">
                   <Link className="nav-link" onClick={logout} to="/login">LogOut ({JSON.parse(auth).name})</Link>
+                </li>
+                <li className="nav-item">
+                  <Link className="nav-link" to="/settings">Settings</Link>
                 </li>
               </>
             ) : (
