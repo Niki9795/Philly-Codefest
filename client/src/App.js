@@ -7,6 +7,9 @@ import SignUp from "./AppPages/SignUpPage";
 import PrivateComponent from "./components/privateComponent";
 import Settings from './AppPages/Settings'; // Import your Settings component
 import Login from "./AppPages/LoginPage";
+import Dashboard from "./AppPages/Dashboard";
+import "bootstrap/dist/css/bootstrap.min.css";
+import './css/theme.css'; // Import the CSS file
 
 function App() {
 
@@ -22,6 +25,7 @@ function App() {
         <Route path="/settings" element={<Settings />} />
         <Route path="/Dashboard" element={<Dashboard />} />
         <Route path="/homepage" element={<HomePage />}/>
+        <Route path="/login" element={<Login />} />
       </Routes>
       </BrowserRouter>
     </div>
