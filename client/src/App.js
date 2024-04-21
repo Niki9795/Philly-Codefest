@@ -19,11 +19,11 @@ function App() {
       <Nav />
       <Routes>
         <Route element={<PrivateComponent />}>
-        <Route path="/" element={<HomePage />}/>
+        <Route path="/dashboard" element={<Dashboard />} />
         </Route>
         <Route path="/signup" element={<SignUp />} />
         <Route path="/settings" element={<Settings />} />
-        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/" element={<HomePage />}/>
         <Route path="/homepage" element={<HomePage />}/>
         <Route path="/login" element={<Login />} />
       </Routes>
