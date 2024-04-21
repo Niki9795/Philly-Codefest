@@ -2,11 +2,15 @@
 import os
 import torch
 import torchaudio
+import torch.nn as nn
 from torchvision import models, transforms
 from torch.utils.data import Dataset, DataLoader
 import librosa
 import numpy as np
 from PIL import Image
+import json
+
+sr = 44100
 
 
 # Define the same AudioDataset class as used during training
@@ -38,10 +42,13 @@ def model_fn(model_dir):
 
 # Define the input_fn to process the input data
 def input_fn(request_body, request_content_type):
-    if request_content_type == "application/wav":
+    if request_content_type == "application/json":
         # Load the audio file
-        audio, sr = librosa.load(request_body, sr=44100, mono=True)
+        input_data = json.loads(request_body)
+        input_signal = np.array(input_data["signal"])
+        input_sr = input_data["sr"]
 
+        audio = librosa.resample(input_signal, orig_sr=input_sr, target_sr=sr)
         # Pad/trim the audio signal to the same length
         if len(audio) > 5 * sr:
             audio = audio[: 5 * sr]
@@ -79,7 +86,7 @@ def input_fn(request_body, request_content_type):
 
         # Normalize the spectrogram
         specs = (specs - specs.mean()) / (specs.std() + 1e-6)
-
+        specs = specs.reshape((1, specs.shape[0], specs.shape[1], specs.shape[2]))
         return specs
     else:
         raise ValueError(f"Unsupported content type: {request_content_type}")
@@ -91,6 +98,7 @@ def predict_fn(input_data, model):
     model.eval()
     with torch.no_grad():
         input_data = torch.tensor(input_data, dtype=torch.float32).to(device)
+        print(input_data.shape, device)
         output = model(input_data)
         return output
 
