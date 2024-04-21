@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap
 
 const Settings = () => {
     const [name, setName] = useState("");
@@ -21,24 +22,26 @@ const Settings = () => {
     }
 
     return(
-        <div>
-            <form onSubmit={collectData}>
-                <label>Name:</label>
-                <input type="text" value={name} onChange={e => setName(e.target.value)} />
-
-                <label>Email:</label>
-                <input type="email" value={email} onChange={e => setEmail(e.target.value)} />
-
-                <label>Password:</label>
-                <input type="password" value={password} onChange={e => setPassword(e.target.value)} />
-
-                <label>SMS:</label>
-                <input type="text" value={sms} onChange={e => setSms(e.target.value)} />
-
-                <button type="submit">Submit</button>
-            </form>
+      <div className="container">
+      <form onSubmit={collectData} className="mt-5">
+        <div className="form-group">
+        <label>Name: {name}</label>
         </div>
+
+        <div className="form-group">
+        <label>Email:</label>
+        <input type="email" value={email} onChange={e => setEmail(e.target.value)} className="form-control" />
+        </div>
+
+        <div className="form-group">
+        <label>SMS:</label>
+        <input type="text" value={sms} onChange={e => setSms(e.target.value)} className="form-control" />
+        </div>
+
+        <button type="submit" className="btn btn-primary">Submit</button>
+      </form>
+      </div>
     );
 }
 
-export default Settings;
+export default Settings; 
