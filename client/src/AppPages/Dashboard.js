@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "mapbox-gl/dist/mapbox-gl.css";
 import AlertInfo from "../components/alerts";
 import Map, { Marker } from 'react-map-gl';
@@ -7,6 +7,22 @@ import EventAlertModal from "../components/EventAlert";
 
 const Dashboard = () => {
     const [showModal, setShowModal] = useState(false); //remove
+    const [location, setLocation] = useState({longitude: 0, latitude: 0});
+    const [markers, setMarkers] = useState([]);
+    
+    useEffect(() => {
+        fetch('http://localhost:8000/location')
+            .then(response => response.json())
+            .then(data => setLocation(data))
+            .catch(err => console.error(err));
+    }, []);
+
+    useEffect(() => {
+        fetch('http://localhost:8000/markers') // Replace with your server's URL
+          .then(response => response.json())
+          .then(data => setMarkers(data))
+          .catch(error => console.error(error));
+      }, []);
 
     const handleAlertClick  = () => { //remove for alert
         setShowModal(true);
@@ -20,14 +36,23 @@ const Dashboard = () => {
                     <Map
                         mapboxAccessToken="pk.eyJ1IjoibWFsaWt1amp3YWwiLCJhIjoiY2x2OGxwZG5xMDZibjJqbnprdDNhb2s4NiJ9.ANScLYZmZCyhYm-PMHHcog"
                         initialViewState={{
-                            longitude: -62.46641126710576,
-                            latitude:-3.5146957460989574,
-                            zoom: 14
+                            longitude: location.longitude,
+                            latitude: location.latitude,
+                            zoom: 10
                         }}
                         style={{ width: "100%", height: "100%" }}
                         mapStyle="mapbox://styles/mapbox/outdoors-v12"
                     >
-                        <Marker longitude={-62.46641126710576} latitude={-3.5146957460989574} anchor="bottom" color="red" />
+                        {markers.map((marker, index) => (
+                        <Marker
+                            key={index}
+                            longitude={marker.longitude}
+                            latitude={marker.latitude}
+                            anchor="bottom"
+                            color="red"
+                        />
+                        ))}
+                        {/* <Marker longitude={-62.46641126710576} latitude={-3.5146957460989574} anchor="bottom" color="red" /> */}
                     </Map>
                 </div>
                 <div className="col-lg-5 col-md-12 p-4 d-flex flex-column justify-content-start align-items-center p-4 flat-green scrollable-section">
