@@ -9,7 +9,15 @@ const Dashboard = () => {
     const [showModal, setShowModal] = useState(false); //remove
     const [location, setLocation] = useState({longitude: 0, latitude: 0});
     const [markers, setMarkers] = useState([]);
+    const [outputData, setOutputData] = useState(null);
     
+    const handleAlertClick  = (data) => { //remove for alert
+        setShowModal(true);
+        setOutputData(data);
+    };
+
+    const handleCloseModal = () => setShowModal(false);
+
     useEffect(() => {
         fetch('http://localhost:8000/location')
             .then(response => response.json())
@@ -24,10 +32,23 @@ const Dashboard = () => {
           .catch(error => console.error(error));
       }, []);
 
-    const handleAlertClick  = () => { //remove for alert
-        setShowModal(true);
-    };
-    const handleCloseModal = () => setShowModal(false);
+    useEffect(() => {
+        const interval = setInterval(() => {
+            fetch('http://localhost:8000/detect')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.data !== null) {
+                        handleAlertClick(data.data); //remove
+                        console.log(data.data);
+                    }
+                })
+                .catch(error => console.error(error));
+        }, 10000); // 10000 milliseconds = 10 seconds
+
+        return () => {
+            clearInterval(interval);
+        };
+    }, []);
 
     return (
         <div>
@@ -107,7 +128,7 @@ const Dashboard = () => {
                     </div>
                 </div>
             </div>
-            <EventAlertModal show={showModal} handleClose={handleCloseModal} />
+            <EventAlertModal show={showModal} handleClose={handleCloseModal} data={outputData}/>
         </div>
         
     );

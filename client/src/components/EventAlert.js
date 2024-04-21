@@ -2,7 +2,7 @@ import React from 'react';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 
-const EventAlertModal = ({ show, handleClose }) => {
+const EventAlertModal = ({ show, handleClose, data }) => {
     const handleConfirm = () => {
         // Any additional logic for handling confirmation
         handleClose();  // Close the modal
@@ -23,7 +23,15 @@ const EventAlertModal = ({ show, handleClose }) => {
             <Modal.Header closeButton>
                 <Modal.Title>Event Notification</Modal.Title>
             </Modal.Header>
-            <Modal.Body>This is an important event alert for Belém do Candeia.</Modal.Body>
+            <Modal.Body>
+                <p>This is an important alert for Belém do Candeia.</p>
+                {data && (
+                    <div>
+                        <p>Class: {data.class}</p>
+                        <p>Confidence: {data.confidence}</p>
+                    </div>
+                )}
+            </Modal.Body>
             <Modal.Footer style={{ display: "flex", justifyContent: "space-between" }}>
                 <Button variant="success" onClick={handleConfirm}>
                     Accept
